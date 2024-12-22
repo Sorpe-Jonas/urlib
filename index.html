@@ -1,63 +1,24 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encurtador de URL</title>
-    <link rel="stylesheet" href="styles.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2528224422818576" crossorigin="anonymous"></script>
+    <title>Seu Site</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2528224422818576"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <h1>Encurtador de URL com Anúncios</h1>
-    </header>
+    <!-- Seu conteúdo -->
+    <h1>Bem-vindo ao meu site!</h1>
 
-    <main>
-        <form id="url-form">
-            <label for="url">Cole sua URL aqui:</label>
-            <input type="url" id="url" placeholder="https://exemplo.com" required>
-            <button type="submit">Encurtar</button>
-        </form>
-
-        <div id="result">
-            <p>Sua URL encurtada:</p>
-            <a id="short-url" href="#" target="_blank"></a>
-        </div>
-
-        <div class="ad">
-            <!-- Bloco de anúncios -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-2528224422818576"
-                 data-ad-slot="1234567890"
-                 data-ad-format="auto"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Encurtador com Anúncios</p>
-    </footer>
-
+    <!-- Coloque o código do anúncio onde deseja exibi-lo -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2528224422818576"
+         data-ad-slot="1234567890"  <!-- Altere para o seu slot de anúncio -->
+         data-ad-format="auto"></ins>
     <script>
-        document.getElementById('url-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            const url = document.getElementById('url').value;
-            try {
-                const response = await fetch('/api/encurtar', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url })
-                });
-                const data = await response.json();
-                document.getElementById('short-url').textContent = data.shortUrl;
-                document.getElementById('short-url').href = data.shortUrl;
-            } catch (error) {
-                alert('Erro ao encurtar a URL.');
-            }
-        });
+        (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </body>
 </html>
