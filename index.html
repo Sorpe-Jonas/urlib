@@ -3,48 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encurtador Brig</title>
+    <title>Encurtador de URL</title>
     <link rel="stylesheet" href="styles.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2528224422818576" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <h1>Bem-vindo à nossa página de Comerciais</h1>
+        <h1>Encurtador de URL com Anúncios</h1>
     </header>
 
-    <div class="ad-container">
-        <div class="ad" id="ad1">
-            <!-- Anúncio 1 -->
+    <main>
+        <form id="url-form">
+            <label for="url">Cole sua URL aqui:</label>
+            <input type="url" id="url" placeholder="https://exemplo.com" required>
+            <button type="submit">Encurtar</button>
+        </form>
+
+        <div id="result">
+            <p>Sua URL encurtada:</p>
+            <a id="short-url" href="#" target="_blank"></a>
+        </div>
+
+        <div class="ad">
+            <!-- Bloco de anúncios -->
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-2528224422818576"
                  data-ad-slot="1234567890"
                  data-ad-format="auto"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
-        <div class="ad" id="ad2">
-            <!-- Anúncio 2 -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-2528224422818576"
-                 data-ad-slot="1234567891"
-                 data-ad-format="auto"></ins>
-        </div>
-        <div class="ad" id="ad3">
-            <!-- Anúncio 3 -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-2528224422818576"
-                 data-ad-slot="1234567892"
-                 data-ad-format="auto"></ins>
-        </div>
-    </div>
+    </main>
 
     <footer>
-        <p>Todos os direitos reservados &copy; 2024</p>
+        <p>&copy; 2024 Encurtador com Anúncios</p>
     </footer>
 
     <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
+        document.getElementById('url-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const url = document.getElementById('url').value;
+            try {
+                const response = await fetch('/api/encurtar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+                const data = await response.json();
+                document.getElementById('short-url').textContent = data.shortUrl;
+                document.getElementById('short-url').href = data.shortUrl;
+            } catch (error) {
+                alert('Erro ao encurtar a URL.');
+            }
+        });
     </script>
 </body>
 </html>
