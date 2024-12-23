@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seu Site</title>
+    <title>Encurtador de URL</title>
+
+    <!-- Adicionando o script do Google Ads -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2528224422818576"
             crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Bem-vindo ao meu site!</h1>
+    <h1>Bem-vindo ao Encurtador de URL</h1>
+    
+    <!-- Formulário de Encurtamento de URL -->
+    <form id="urlForm">
+        <label for="urlInput">Digite a URL:</label>
+        <input type="text" id="urlInput" name="urlInput" required>
+        <button type="submit">Encurtar</button>
+    </form>
+    
+    <p id="status">Digite uma URL para encurtar</p>
 
-    <!-- Exibir o status da conexão com o banco de dados -->
-    <div id="db-status">Conectando ao banco de dados...</div>
-
-    <!-- Formulário para encurtar URL -->
-    <div>
-        <label for="long-url">Digite a URL para encurtar no campo:</label>
-        <input type="text" id="long-url" placeholder="URL longa" />
-        <button onclick="encurtarUrl()">Encurtar URL</button>
-    </div>
-
-    <div id="short-url"></div>
-
-    <!-- Coloque o código do anúncio onde deseja exibi-lo -->
+    <!-- Exibição do anúncio do Google -->
     <ins class="adsbygoogle"
          style="display:block"
          data-ad-client="ca-pub-2528224422818576"
@@ -30,56 +29,9 @@
          data-ad-format="auto"></ins>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
-
-        // Função para checar o status do banco de dados
-        function checkDatabaseStatus() {
-            fetch('https://seu-dominio-render/status')
-                .then(response => response.json())
-                .then(data => {
-                    const statusElement = document.getElementById('db-status');
-                    statusElement.textContent = data.status;
-                    if (data.status.includes('Falha')) {
-                        statusElement.style.color = 'red';
-                    } else {
-                        statusElement.style.color = 'green';
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro ao verificar a conexão com o banco:', error);
-                    const statusElement = document.getElementById('db-status');
-                    statusElement.textContent = 'Erro ao verificar a conexão com o banco.';
-                    statusElement.style.color = 'red';
-                });
-        }
-
-        // Chama a função assim que a página carrega
-        window.onload = checkDatabaseStatus;
-
-        // Função para encurtar a URL
-        function encurtarUrl() {
-            const longUrl = document.getElementById('long-url').value;
-            if (!longUrl) {
-                alert('Por favor, insira uma URL válida!');
-                return;
-            }
-
-            fetch('https://seu-dominio-render/encurtar', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ longUrl })
-            })
-            .then(response => response.json())
-            .then(data => {
-                const shortUrlElement = document.getElementById('short-url');
-                shortUrlElement.textContent = `URL encurtada: ${data.shortUrl}`;
-            })
-            .catch(error => {
-                console.error('Erro ao encurtar a URL:', error);
-                alert('Erro ao encurtar a URL.');
-            });
-        }
     </script>
+
+    <!-- Referência ao script externo -->
+    <script src="script.js"></script>
 </body>
 </html>
