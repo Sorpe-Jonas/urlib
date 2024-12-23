@@ -3,22 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seu Site</title>
+    <title>Encurtador de URL</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2528224422818576"
             crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- Seu conteúdo -->
-    <h1>Bem-vindo ao meu site!</h1>
+    <header>
+        <h1>Encurtador de URL</h1>
+        <p>Insira uma URL longa e encurte-a facilmente.</p>
+    </header>
 
-    <!-- Coloque o código do anúncio onde deseja exibi-lo -->
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-2528224422818576"
-         data-ad-slot="1234567890"  <!-- Altere para o seu slot de anúncio -->
-         data-ad-format="auto"></ins>
+    <section>
+        <form id="urlForm">
+            <label for="longUrl">URL Longa:</label>
+            <input type="url" id="longUrl" name="longUrl" required>
+            <button type="submit">Encurtar URL</button>
+        </form>
+    </section>
+
+    <section id="shortUrlSection" style="display:none;">
+        <h2>URL Encurtada:</h2>
+        <p><a href="" id="shortUrl" target="_blank"></a></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Encurtador de URL</p>
+    </footer>
+
     <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
+        // Função para enviar a URL para o backend e obter a URL encurtada
+        document.getElementById('urlForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const longUrl = document.getElementById('longUrl').value;
+
+            fetch('https://seu-backend-url/render/encurtar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ longUrl })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Exibir a URL encurtada
+                document.getElementById('shortUrl').href = data.shortUrl;
+                document.getElementById('shortUrl').innerText = data.shortUrl;
+                document.getElementById('shortUrlSection').style.display = 'block';
+            })
+            .catch(error => console.error('Erro ao encurtar a URL:', error));
+        });
     </script>
 </body>
 </html>
