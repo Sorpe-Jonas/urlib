@@ -1,31 +1,19 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const adIds = ['ad1', 'ad2', 'ad3', 'ad4'];
+const { Client } = require('pg');
 
-    // Função que carrega os anúncios da API
-    function loadAds() {
-        // Substitua esta URL com a API de anúncios que você for usar
-        const apiUrl = "https://api.exemplo.com/ads";
+// String de Conexão PostgreSQL fornecida pelo Render
+const connectionString = 'postgresql://url_shortener_7npw_user:zrAhsUvBCofJPVRboU7pwOXZpBlw1G4Z@dpg-ctk9ustsvqrc738d99g0-a.oregon-postgres.render.com/url_shortener_7npw';
 
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                // Supondo que a resposta da API seja uma lista de URLs de anúncios
-                for (let i = 0; i < adIds.length; i++) {
-                    const adElement = document.getElementById(adIds[i]);
-                    const adData = data[i];
-
-                    if (adData) {
-                        adElement.innerHTML = `<a href="${adData.url}" target="_blank"><img src="${adData.image}" alt="Anúncio"></a>`;
-                    } else {
-                        adElement.innerHTML = "Anúncio indisponível";
-                    }
-                }
-            })
-            .catch(error => {
-                console.error("Erro ao carregar os anúncios:", error);
-            });
-    }
-
-    // Carregar os anúncios ao abrir a página
-    loadAds();
+const client = new Client({
+  connectionString: connectionString,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
+
+client.connect()
+  .then(() => {
+    console.log('Conectado ao banco de dados com sucesso!');
+  })
+  .catch(err => {
+    console.error('Erro ao conectar ao banco de dados:', err);
+  });
