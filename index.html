@@ -3,17 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encurtador de URL</title>
-    <script src="frontend.js"></script>
+    <title>Redirecionamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            visibility: hidden; /* Inicialmente invisível */
+        }
+        .button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .countdown {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Encurtador de URL</h1>
-    <form id="urlForm">
-        <label for="url">Digite a URL que deseja encurtar:</label>
-        <input type="url" id="url" name="url" required>
-        <button type="submit">Encurtar URL</button>
-    </form>
 
-    <p id="result"></p>
+    <div class="container">
+        <button id="redirectButton" class="button" disabled>Redirecionar em <span id="countdown">10</span> segundos</button>
+    </div>
+
+    <script>
+        let countdownValue = 10;
+        const countdownElement = document.getElementById("countdown");
+        const redirectButton = document.getElementById("redirectButton");
+
+        // URL de destino, que não será exposta no código-fonte
+        const redirectURL = "t.me/bugday2"; // Substitua pela URL de destino
+
+        // Função para iniciar a contagem regressiva
+        const startCountdown = () => {
+            const interval = setInterval(() => {
+                countdownValue--;
+                countdownElement.textContent = countdownValue;
+
+                // Quando o contador chegar a 0, habilita o botão e faz o redirecionamento
+                if (countdownValue === 0) {
+                    clearInterval(interval);
+                    redirectButton.disabled = false;
+                    redirectButton.style.visibility = "visible"; // Torna o botão visível
+                    redirectButton.textContent = "Redirecionar Agora!";
+                }
+            }, 1000);
+        };
+
+        // Função para redirecionar para a URL
+        const redirectToURL = () => {
+            window.location.href = redirectURL;
+        };
+
+        // Iniciar contagem regressiva
+        startCountdown();
+
+        // Adicionar evento de clique para redirecionamento
+        redirectButton.addEventListener("click", redirectToURL);
+    </script>
+
 </body>
 </html>
