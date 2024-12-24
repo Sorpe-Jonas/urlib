@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecionamento</title>
+    <title>Redirecionamento com Contagem Regressiva</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2528224422818576"
+        crossorigin="anonymous"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             margin: 0;
@@ -16,6 +18,7 @@
         }
         .container {
             text-align: center;
+            margin-top: 20px;
         }
         .button {
             background-color: #4CAF50;
@@ -34,21 +37,74 @@
             font-size: 24px;
             margin-top: 20px;
         }
+        .ad-container {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 600px;
+            background-color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .link-container {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 600px;
+            background-color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .link-container input, .link-container button {
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .link-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .link-container ul li {
+            padding: 8px;
+            background-color: #e9f7df;
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
 
+    <div class="ad-container">
+        <!-- Bloco de anúncios (Google Ads) -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-2528224422818576"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
     <div class="container">
         <button id="redirectButton" class="button" disabled>Redirecionar em <span id="countdown">10</span> segundos</button>
+    </div>
+
+    <div class="link-container">
+        <h3>Adicionar Links</h3>
+        <input type="text" id="newLink" placeholder="Cole um link para adicionar" />
+        <button id="addLinkButton">Adicionar Link</button>
+        <ul id="linkList"></ul>
     </div>
 
     <script>
         let countdownValue = 10;
         const countdownElement = document.getElementById("countdown");
         const redirectButton = document.getElementById("redirectButton");
+        const addLinkButton = document.getElementById("addLinkButton");
+        const newLinkInput = document.getElementById("newLink");
+        const linkList = document.getElementById("linkList");
 
-        // URL de destino, que não será exposta no código-fonte
-        const redirectURL = "t.me/bugday2"; // Substitua pela URL de destino
+        // URL de redirecionamento após 10 segundos
+        const redirectURL = "https://t.me/bugday2";
 
         // Função para iniciar a contagem regressiva
         const startCountdown = () => {
@@ -56,7 +112,6 @@
                 countdownValue--;
                 countdownElement.textContent = countdownValue;
 
-                // Quando o contador chegar a 0, habilita o botão e faz o redirecionamento
                 if (countdownValue === 0) {
                     clearInterval(interval);
                     redirectButton.disabled = false;
@@ -71,11 +126,27 @@
             window.location.href = redirectURL;
         };
 
+        // Função para adicionar links à lista
+        const addLinkToList = (link) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = link;
+            linkList.appendChild(listItem);
+        };
+
         // Iniciar contagem regressiva
         startCountdown();
 
-        // Adicionar evento de clique para redirecionamento
+        // Evento de clique para redirecionar
         redirectButton.addEventListener("click", redirectToURL);
+
+        // Evento de clique para adicionar link à lista
+        addLinkButton.addEventListener("click", () => {
+            const link = newLinkInput.value.trim();
+            if (link) {
+                addLinkToList(link);
+                newLinkInput.value = ""; // Limpar o campo de entrada
+            }
+        });
     </script>
 
 </body>
